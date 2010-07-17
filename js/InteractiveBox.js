@@ -1,6 +1,6 @@
 /**
  * Intearctive Box
- * Box which can be scaled dynamically.
+ * 
  * 
  * Created by Anthony Cintron - anthony.cintron@gmail.com
  */
@@ -9,7 +9,7 @@ function InteractiveBox(objID, name, width, height, fillColor, strokeColor, stro
     Box.call(this, objID, name, width, height, fillColor, strokeColor, strokeWeight);
 
     var defaultText = dfltText;
-
+    
     // draw corner points
     (function __init__(that)
     {
@@ -152,4 +152,15 @@ function DiagramObject(container, name, width, height, fillColor, strokeColor) {
         return value.substr(0, len);
     }
     
+    
+    return {
+      x: function (value) {
+        var newPos = $('#'+ name ).css({left:value+'px'});
+        return newPos;
+      },
+      y: function (value) {
+        var newPos = $('#'+ name ).css({top:value+'px'})
+        return newPos;
+      }
+    }
 }
