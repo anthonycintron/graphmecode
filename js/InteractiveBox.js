@@ -62,12 +62,13 @@ DiagramObject.prototype = Box.prototype.beget();
 // container is the canvas/viewport
 // name is the diagram object's name
 function DiagramObject(container, name, width, height, fillColor, strokeColor) {
+    // create diagram 
     $("<div id='" + name + "'>").css({
         position: 'absolute',
         width: width + 'px',
         height: height + 'px'
     }).appendTo(container);
-
+    // make diagram draggable
     $("#" + name + "").draggable( { 
       cursor:'crosshair'
     }).mouseout(function() {
@@ -76,12 +77,12 @@ function DiagramObject(container, name, width, height, fillColor, strokeColor) {
       'maxHeight':78,
       'minHeight':78
     });
-
+    
     (function __init() {
         for (var i = 0; i < 3; i += 1) {
-            
+            // create each interactive box.
             var ib = new InteractiveBox("#" + name,
-            "__obj" + i,
+            name+"__obj" + i,
             150,
             25,
             "#F4C8FF",
@@ -89,9 +90,8 @@ function DiagramObject(container, name, width, height, fillColor, strokeColor) {
             null,
             getDefaultName(i));
           
-          // subscribe
-          $('#__obj'+i).bind('update', function() {
-
+          // subscribe to update event
+          $('#'+name+'__obj'+i).bind('update', function() {
             updatePosition();
           });
           positionIABox(i);  
@@ -110,19 +110,19 @@ function DiagramObject(container, name, width, height, fillColor, strokeColor) {
 
           var newTopPos = Number(
           extractPX(
-          $("#__obj" + (num)).css(
+          $("#"+name+"__obj" + (num)).css(
           "top"
           )));
 
           var newHeight = Number(
           extractPX(
-          $("#__obj" + (num)).css(
+          $("#"+name+"__obj" + (num)).css(
           "height"
           )));
 
           var lastObjPos = (newTopPos + newHeight);
 
-          $("#__obj" + index).css({
+          $("#"+name+"__obj" + index).css({
               "top": lastObjPos
           });
       }
