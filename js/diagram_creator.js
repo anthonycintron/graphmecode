@@ -5,44 +5,72 @@ var app = {
   totalDiagrams: 0,
   diagrams: new Array(),
   ctrlpts: [400, 200, 400, 300, 100, 300, 200, 200],
-  context: new Object()
+  context: new Object(),
+  canvas: {}
 }
 
 function create() {
   
-  var dObj = new DiagramObject("body", "diagram"+app.totalDiagrams, 160, 76, "#F4C8FF", "#BB6891");
+  var dObj = new DiagramObject("body", "diagram"+app.totalDiagrams, 
+                                160, 76, "#F4C8FF", "#BB6891");
   dObj.x(Math.random()*1000);
   dObj.y(Math.random()*600);
   app.totalDiagrams += 1;
-  
   app.diagrams.push(dObj);
-  
 }
 
 
 $(function() {
   var canvas, context, ctrlpts = [200, 100, 400, 200, 100, 300];
-  canvas = document.getElementById("edge");
-  app.context = canvas.getContext("2d");
+  app.canvas = document.getElementById("edge");
+  app.context = app.canvas.getContext("2d");
   
   $("#edge").mousedown(function(e) {
-   
+    // object
+    var xpos = e.pageX-$(this).offset().left;
+    var ypos = e.pageY-$(this).offset().top;
+    var a = app;
+    for ( i=0; i<8; i+=2 ) {
+      if (xpos > a.ctrlpts[i]-3 && xpos < a.ctrlpts[i]+3 
+        && ypos > a.ctrlpts[i+1]-3 && ypos < a.ctrlpts[i+1]+3) {
+        $(this).bind("mousemove", {index:i}, move_ctrlpts);
+        break;
+      }
+    }
   });  
   
   draw_guide_ctrls();
-  draw_edge(context);
-   
+  draw_edge();
 });
 
-function draw_guide_ctrls() {
+
+function move_ctrlpts(evt) {
+  app.ctrlpts[evt.data.index]   = evt.pageX-$(this).offset().left;
+  app.ctrlpts[evt.data.index+1] = evt.pageY-$(this).offset().top;
+  app.canvas.width = app.canvas.width;
   app.context.fillStyle = "#0000ff";
+  for ( i = 0; i < 8; i+=2) {
+    app.context.fillRect(app.ctrlpts[i]-2, app.ctrlpts[i+1]-2, 4, 4);
+  }
+  draw_edge();
+}
+
+
+function draw_guide_ctrls() {
+  var color = "#0000ff";
+  app.context.fillStyle = color;
   app.context.fillRect(app.ctrlpts[0]-2, app.ctrlpts[1]-2, 4, 4);
+  app.context.fillStyle = color;
+  app.context.fillRect(app.ctrlpts[2]-2, app.ctrlpts[3]-2, 4, 4);
+  app.context.fillStyle = color;
+  app.context.fillRect(app.ctrlpts[4]-2, app.ctrlpts[5]-2, 4, 4);
+  app.context.fillStyle = color;
+  app.context.fillRect(app.ctrlpts[6]-2, app.ctrlpts[7]-2, 4, 4);
 }
 
 
 
-function draw_edge(context) {
-  
+function draw_edge() {
   app.context.beginPath();
 	app.context.moveTo(app.ctrlpts[0], app.ctrlpts[1]);
 	app.context.lineTo(app.ctrlpts[2], app.ctrlpts[3]);
