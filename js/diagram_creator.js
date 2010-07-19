@@ -39,9 +39,13 @@ $(function() {
     }
   });  
   
+  $("#edge").mouseup(function() {
+    $(this).unbind("mousemove", move_ctrlpts);
+  })
   draw_guide_ctrls();
   draw_edge();
 });
+
 
 
 function move_ctrlpts(evt) {
@@ -50,7 +54,7 @@ function move_ctrlpts(evt) {
   app.canvas.width = app.canvas.width;
   app.context.fillStyle = "#0000ff";
   for ( i = 0; i < 8; i+=2) {
-    app.context.fillRect(app.ctrlpts[i]-2, app.ctrlpts[i+1]-2, 4, 4);
+    app.context.fillRect(app.ctrlpts[i]-4, app.ctrlpts[i+1]-4, 6, 6);
   }
   draw_edge();
 }
@@ -59,13 +63,13 @@ function move_ctrlpts(evt) {
 function draw_guide_ctrls() {
   var color = "#0000ff";
   app.context.fillStyle = color;
-  app.context.fillRect(app.ctrlpts[0]-2, app.ctrlpts[1]-2, 4, 4);
+  app.context.fillRect(app.ctrlpts[0]-4, app.ctrlpts[1]-4, 6, 6);
   app.context.fillStyle = color;
-  app.context.fillRect(app.ctrlpts[2]-2, app.ctrlpts[3]-2, 4, 4);
+  app.context.fillRect(app.ctrlpts[2]-4, app.ctrlpts[3]-4, 6, 6);
   app.context.fillStyle = color;
-  app.context.fillRect(app.ctrlpts[4]-2, app.ctrlpts[5]-2, 4, 4);
+  app.context.fillRect(app.ctrlpts[4]-4, app.ctrlpts[5]-4, 6, 6);
   app.context.fillStyle = color;
-  app.context.fillRect(app.ctrlpts[6]-2, app.ctrlpts[7]-2, 4, 4);
+  app.context.fillRect(app.ctrlpts[6]-4, app.ctrlpts[7]-4, 6, 6);
 }
 
 
@@ -83,5 +87,4 @@ function draw_edge() {
 	app.context.bezierCurveTo(app.ctrlpts[2], app.ctrlpts[3], app.ctrlpts[4], app.ctrlpts[5], app.ctrlpts[6], app.ctrlpts[7]);
 	app.context.strokeStyle = "#ff0000";
 	app.context.stroke();
-
 }
