@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <script src='http://code.jquery.com/jquery-1.4.2.min.js'></script>
+    <script>
+      $(document).ready(function(){
+        function debug(str) {
+          $("#debug").append("<p>"+str+"</p>");
+        };
+
+        // HARD CODED
+        $('body').data('user', { id: 1 });
+        $user = $('body').data('user');
+
+        ws = new WebSocket("ws://localhost:6789");
+        ws.onmessage = function(evt) {
+          // create some sort of router here
+          $user = $.parseJSON(evt.data);
+          $("#msg").append("<p>"+evt.data+"</p>");
+        };
+        ws.onclose = function() { debug("socket closed"); };
+        ws.onopen = function() {
+          var $obj = $.extend(true, {}, $user);
+          $obj.action = 'find';
+          ws.send(JSON.stringify($obj));
+        };
+
+        $('#fun').click(function() {
+          ws.send(JSON.stringify($user));
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="debug">
+      <h1>Debug Messages</h1>
+    </div>
+    <div id="msg">
+      <h1>Messages from Server</h1>
+    </div>
+    <div id="fun" style="width:100px; height:100px; background-color:blue;">
+      Click me
+    </div>
+  </body>
+</html>
