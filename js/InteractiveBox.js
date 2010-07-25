@@ -159,9 +159,15 @@ function DiagramObject(container, name, width, height, fillColor, strokeColor) {
         var newPos = $('#'+ name ).css({left:value+'px'});
         return newPos;
       },
+      getX: function() {
+        return $('#'+name).offset().left;
+      },
       y: function (value) {
         var newPos = $('#'+ name ).css({top:value+'px'})
         return newPos;
+      },
+      getY: function() {
+        return $('#'+name).offset().top;
       }
     }
 }
