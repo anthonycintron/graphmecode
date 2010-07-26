@@ -42,6 +42,7 @@ $(function() {
   $("#edge").mouseup(function() {
     $(this).unbind("mousemove", move_ctrlpts);
   })
+  
   draw_guide_ctrls();
   draw_edge();
 });
@@ -87,4 +88,8 @@ function draw_edge() {
 	app.context.bezierCurveTo(app.ctrlpts[2], app.ctrlpts[3], app.ctrlpts[4], app.ctrlpts[5], app.ctrlpts[6], app.ctrlpts[7]);
 	app.context.strokeStyle = "#ff0000";
 	app.context.stroke();
+}
+
+function create_edge() {
+  
 }
