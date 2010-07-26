@@ -6,7 +6,8 @@ var app = {
   diagrams: new Array(),
   ctrlpts: [400, 200, 400, 300, 100, 300, 200, 200],
   context: new Object(),
-  canvas: {}
+  canvas: {},
+  totalEdges: 0
 }
 
 function create() {
@@ -19,36 +20,6 @@ function create() {
   app.diagrams.push(dObj);
 }
 
-
-$(function() {
-  var canvas, context, ctrlpts = [200, 100, 400, 200, 100, 300];
-  app.canvas = document.getElementById("edge");
-  app.context = app.canvas.getContext("2d");
-  
-  $("#edge").mousedown(function(e) {
-    // object
-    var xpos = e.pageX-$(this).offset().left;
-    var ypos = e.pageY-$(this).offset().top;
-    var a = app;
-    for ( i=0; i<8; i+=2 ) {
-      if (xpos > a.ctrlpts[i]-3 && xpos < a.ctrlpts[i]+3 
-        && ypos > a.ctrlpts[i+1]-3 && ypos < a.ctrlpts[i+1]+3) {
-        $(this).bind("mousemove", {index:i}, move_ctrlpts);
-        break;
-      }
-    }
-  });  
-  
-  $("#edge").mouseup(function() {
-    $(this).unbind("mousemove", move_ctrlpts);
-  })
-  
-  draw_guide_ctrls();
-  draw_edge();
-});
-
-
-
 function move_ctrlpts(evt) {
   app.ctrlpts[evt.data.index]   = evt.pageX-$(this).offset().left;
   app.ctrlpts[evt.data.index+1] = evt.pageY-$(this).offset().top;
@@ -59,7 +30,6 @@ function move_ctrlpts(evt) {
   }
   draw_edge();
 }
-
 
 function draw_guide_ctrls() {
   var color = "#0000ff";
@@ -72,8 +42,6 @@ function draw_guide_ctrls() {
   app.context.fillStyle = color;
   app.context.fillRect(app.ctrlpts[6]-4, app.ctrlpts[7]-4, 6, 6);
 }
-
-
 
 function draw_edge() {
   app.context.beginPath();
@@ -91,5 +59,39 @@ function draw_edge() {
 }
 
 function create_edge() {
+  var canvas, context, ctrlpts = [200, 100, 400, 200, 100, 300];
+  var newCanvas = document.createElement("canvas");
   
+  newCanvas.setAttribute("width", "600");
+  newCanvas.setAttribute("height", "400");
+  newCanvas.id           = "edge_"+app.totalEdges;
+  newCanvas.style.border = "1px solid #777777";
+  
+  document.body.appendChild(newCanvas);
+
+  app.canvas = newCanvas;
+  app.context = app.canvas.getContext("2d");
+
+  $("#edge_"+app.totalEdges).mousedown(function(e) {
+     // object
+    var xpos = e.pageX-$(this).offset().left;
+    var ypos = e.pageY-$(this).offset().top;
+    var a = app;
+    for ( i=0; i<8; i+=2 ) {
+      if (xpos > a.ctrlpts[i]-3 && xpos < a.ctrlpts[i]+3 
+        && ypos > a.ctrlpts[i+1]-3 && ypos < a.ctrlpts[i+1]+3) {
+        $(this).bind("mousemove", {index:i}, move_ctrlpts);
+        break;
+      }
+    }
+   });  
+
+   $("#edge_"+app.totalEdges).mouseup(function() {
+     $(this).unbind("mousemove", move_ctrlpts);
+   })
+
+   draw_guide_ctrls();
+   draw_edge();
+   
+   app.totalEdges++;
 }
