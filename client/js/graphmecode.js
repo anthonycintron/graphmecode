@@ -4,6 +4,7 @@ document.write('<script type="text/javascript" src="js/components/InteractiveEdg
 document.write('<script type="text/javascript" charset="utf-8" src="js/utils/debugger.js"></script>');
 
 var app = {
+  stage: "body",
   totalDiagrams: 0,                                             // total of diagrams currently created
   diagrams: new Array(),                                        // references to all diagrams currently created
   ctrlpts: [400, 200, 400, 300, 100, 300, 200, 200],            // control points' positions
@@ -16,7 +17,7 @@ var app = {
   },
   
   create_diagram: function() {
-    var dObj = new DiagramObject("body", "diagram"+app.totalDiagrams, 160, 76,"#F4C8FF","#BB6891");
+    var dObj = new DiagramObject(app.stage, "diagram"+app.totalDiagrams, 160, 76,"#F4C8FF","#BB6891");
     dObj.x(Math.random()*1000);
     dObj.y(Math.random()*600);
     app.totalDiagrams += 1;
@@ -34,5 +35,10 @@ var app = {
 
 $(document).ready(function() {
   (function __init__() {
+    
+    $(app.stage).mousemove(function(e) {
+      app.log(e.pageX + ","+e.pageY);
+    });
+    
   })();
 });

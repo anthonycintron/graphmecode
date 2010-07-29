@@ -1,6 +1,6 @@
 var Debugger = {
   log: function (value) {
-    $("#debugger").attr("value", value);
+    $("#mouse_position").text(value);
   }
 }
   
