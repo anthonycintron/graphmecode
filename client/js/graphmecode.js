@@ -37,7 +37,20 @@ $(document).ready(function() {
   (function __init__() {
     
     $(app.stage).mousemove(function(e) {
-      app.log(e.pageX + ","+e.pageY);
+      // 484,337
+      //app.log(e.pageX + "," + e.pageY);
+
+      if ( app.edges.length > 0 ){
+        var pxs = app.edges[0].getCanvas().getContext('2d').getImageData(e.pageX, e.pageY, 500, 800).data
+        for ( i = 0; i < pxs.length; i++ ) {
+        //  app.log(pxs[i]);
+        }
+        
+        
+        //app.log(app.edges[0].getCanvas().getContext('2d').getImageData(e.pageX, e.pageY, 5, 5).data);
+      }
+
+      
     });
     
   })();
