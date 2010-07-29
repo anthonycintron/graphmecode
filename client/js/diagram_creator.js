@@ -31,6 +31,8 @@ function create_diagram() {
 function create_edge() {
   var eObj = new InteractiveEdge("edge_"+app.totalEdges,
                                  document.body,
+                                 "600",
+                                 "400",
                                  "1px solid #777777" );
   app.edges.push(eObj);
   app.totalEdges++;

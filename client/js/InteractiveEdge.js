@@ -1,24 +1,27 @@
-function InteractiveEdge(name, container, border_style, guide_color) {
+function InteractiveEdge(name, container, width, height, border_style, guide_color) {
   
   var ctrlpts = [400, 200, 400, 300, 100, 300, 200, 200];
 
-  this.canvas        = {};
+  var _canvas        = {};
+  
   this.name          = name;
   this.container     = container;
   this.border_style  = border_style;
   this.guide_color   = guide_color;
-
+  this.width         = width;
+  this.height        = height;
+  
   (function __init__() {
-    canvas = document.createElement("canvas");
-    var ctx    = canvas.getContext("2d");
+    _canvas = document.createElement("canvas");
+    var ctx    = _canvas.getContext("2d");
     
-    canvas.setAttribute("width", "600");
-    canvas.setAttribute("height", "400");
+    _canvas.setAttribute("width", width);
+    _canvas.setAttribute("height", height);
     
-    container.appendChild(canvas);  
+    container.appendChild(_canvas);  
     
-    canvas.id           = name;
-    canvas.style.border = border_style;
+    _canvas.id           = name;
+    _canvas.style.border = border_style;
     
     
     $("#"+name).mousedown(function(e) {
@@ -50,7 +53,7 @@ function InteractiveEdge(name, container, border_style, guide_color) {
     var ctx                   = evt.data.ctx;
     ctrlpts[evt.data.index]   = evt.pageX-$(this).offset().left;
     ctrlpts[evt.data.index+1] = evt.pageY-$(this).offset().top;
-    canvas.width              = canvas.width;
+    _canvas.width              = _canvas.width;
     ctx.fillStyle             = "#0000ff";
     
     for ( i = 0; i < 8; i+=2) {
@@ -90,6 +93,15 @@ function InteractiveEdge(name, container, border_style, guide_color) {
   	ctx.bezierCurveTo(ctrlpts[2], ctrlpts[3], ctrlpts[4], ctrlpts[5], ctrlpts[6], ctrlpts[7]);
   	ctx.strokeStyle = "#ff0000";
   	ctx.stroke();
+  }
+  
+  return {
+    setCanvas: function(value) {
+      _canvas = value;
+    },
+    getCanvas: function() {
+      return _canvas;
+    }
   }
   
 }
