@@ -5,7 +5,7 @@
  */
 function InteractiveEdge(name, container, width, height, border_style, guide_color) {
   
-  var ctrlpts = [0, 0, 0, 300, 200, 300, 200, 0];
+  var ctrlpts = [20, 20, 20, 300, 200, 300, 200, 20];
 
   var _canvas        = {};
   
@@ -46,8 +46,9 @@ function InteractiveEdge(name, container, width, height, border_style, guide_col
        $(this).unbind("mousemove", move_ctrlpts);
     });
      
-    draw_guide_ctrls(ctx);
+   
     draw_edge(ctx);
+    draw_guide_ctrls(ctx);
     
   })();
   
@@ -89,6 +90,7 @@ function InteractiveEdge(name, container, width, height, border_style, guide_col
     ctx.beginPath();
   	ctx.moveTo(ctrlpts[0], ctrlpts[1]);
   	ctx.lineTo(ctrlpts[2], ctrlpts[3]);
+  	ctx.moveTo(ctrlpts[4], ctrlpts[5]);
   	ctx.lineTo(ctrlpts[4], ctrlpts[5]);
   	ctx.lineTo(ctrlpts[6], ctrlpts[7]);
   	ctx.strokeStyle = "#C5C5C5";
