@@ -1,7 +1,7 @@
-document.write('<script type="text/javascript" src="js/box.js"></script>');
-document.write('<script type="text/javascript" src="js/InteractiveBox.js"></script>');
-document.write('<script type="text/javascript" src="js/InteractiveEdge.js"></script>');
-document.write('<script type="text/javascript" charset="utf-8" src="js/debugger.js"></script>');
+document.write('<script type="text/javascript" src="js/components/box.js"></script>');
+document.write('<script type="text/javascript" src="js/components/InteractiveBox.js"></script>');
+document.write('<script type="text/javascript" src="js/components/InteractiveEdge.js"></script>');
+document.write('<script type="text/javascript" charset="utf-8" src="js/utils/debugger.js"></script>');
 
 var app = {
   totalDiagrams: 0,                                             // total of diagrams currently created
