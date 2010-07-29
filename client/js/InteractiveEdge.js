@@ -5,7 +5,7 @@
  */
 function InteractiveEdge(name, container, width, height, border_style, guide_color) {
   
-  var ctrlpts = [400, 200, 400, 300, 100, 300, 200, 200];
+  var ctrlpts = [0, 0, 0, 300, 200, 300, 200, 0];
 
   var _canvas        = {};
   
@@ -21,13 +21,13 @@ function InteractiveEdge(name, container, width, height, border_style, guide_col
     var ctx    = _canvas.getContext("2d");
     
     _canvas.setAttribute("width", width);
-    _canvas.setAttribute("height", height);
+    _canvas.setAttribute("height", height );
     
     container.appendChild(_canvas);  
     
-    _canvas.id           = name;
-    _canvas.style.border = border_style;
-    
+    _canvas.id             = name;
+    _canvas.style.border   = border_style;
+    _canvas.style.position = "absolute";
     
     $("#"+name).mousedown(function(e) {
       var xpos = e.pageX-$(this).offset().left;
@@ -59,7 +59,7 @@ function InteractiveEdge(name, container, width, height, border_style, guide_col
     ctrlpts[evt.data.index]   = evt.pageX-$(this).offset().left;
     ctrlpts[evt.data.index+1] = evt.pageY-$(this).offset().top;
     _canvas.width              = _canvas.width;
-    ctx.fillStyle             = "#0000ff";
+    ctx.fillStyle             = "#5C5C5C";
     
     for ( i = 0; i < 8; i+=2) {
       ctx.fillRect(ctrlpts[i]-4, ctrlpts[i+1]-4, 6, 6);
@@ -71,7 +71,7 @@ function InteractiveEdge(name, container, width, height, border_style, guide_col
    * draws the control point guides
    */
   function draw_guide_ctrls(ctx) {
-    var color = "#0000ff";
+    var color = "#5C5C5C";
     ctx.fillStyle = color;
     ctx.fillRect(ctrlpts[0]-4, ctrlpts[1]-4, 6, 6);
     ctx.fillStyle = color;
@@ -91,12 +91,12 @@ function InteractiveEdge(name, container, width, height, border_style, guide_col
   	ctx.lineTo(ctrlpts[2], ctrlpts[3]);
   	ctx.lineTo(ctrlpts[4], ctrlpts[5]);
   	ctx.lineTo(ctrlpts[6], ctrlpts[7]);
-  	ctx.strokeStyle = "#00ff00";
+  	ctx.strokeStyle = "#C5C5C5";
   	ctx.stroke();
   	ctx.beginPath();
   	ctx.moveTo(ctrlpts[0], ctrlpts[1]);
   	ctx.bezierCurveTo(ctrlpts[2], ctrlpts[3], ctrlpts[4], ctrlpts[5], ctrlpts[6], ctrlpts[7]);
-  	ctx.strokeStyle = "#ff0000";
+  	ctx.strokeStyle = "#96093A";
   	ctx.stroke();
   }
   
