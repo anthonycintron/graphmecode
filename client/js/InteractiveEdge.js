@@ -1,3 +1,8 @@
+
+/**
+ * Interactive Edge is an encapsulated object which
+ * enables re-use.
+ */
 function InteractiveEdge(name, container, width, height, border_style, guide_color) {
   
   var ctrlpts = [400, 200, 400, 300, 100, 300, 200, 200];
